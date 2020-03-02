@@ -9,20 +9,59 @@ GAME'S RULES:
 
 */
 
-var scores,roundScore,activePlayer,dice
-
+var scores,roundScore,activePlayer
 scores = [0,0]
 roundScore = 0
 activePlayer = 1
 
-dice = Math.floor(Math.random()*6)+1
-
-document.querySelector('#current-'+ activePlayer).textContent = dice
-document.querySelector('#current-'+ activePlayer).innerHTML='<em>' + dice + '</em>'
-
-var x = document.querySelector('#score-0').textContent
-console.log(x)
-
+//document.querySelector('#current-'+ activePlayer).textContent=dice
+//document.querySelector('#current-'+ activePlayer).innerHTML='<em>' + dice + '</em>'
+//var x = document.querySelector('#score-0').textContent
 document.querySelector('.dice').style.display = 'none'
 
-document.querySelector('.btn-roll').addEventListener('click')
+document.getElementById('score-0').textContent = '0'
+document.getElementById('score-1').textContent = '0'
+document.getElementById('current-0').textContent = '0'
+document.getElementById('current-1').textContent = '0'
+
+document.querySelector('.btn-roll').addEventListener('click', function(){
+    // here is the Random Number
+    var dice = Math.floor(Math.random() * 6) + 1
+    // display the result
+    var diceDom = document.querySelector('.dice')
+    diceDom.style.display = 'block'
+    diceDom.src = 'dice-' + dice + '.png'
+    // Update the round score IF the rolled number was Not a 1
+    if( dice !== 1){
+        //add score
+        roundScore = roundScore + dice
+        document.querySelector('#current-'+ activePlayer).textContent= roundScore
+    }else{
+        // next player
+     activePlayer === 0 ? activePlayer = 1 : activePlayer = 0
+        /* 
+        the same from the top
+        if(activePlayer === 0){
+            activePlayer = 1
+        }else{
+            activePlayer = 0
+        } */
+
+        roundScore = 0 
+        document.getElementById('current-0').textContent = '0'
+        document.getElementById('current-1').textContent = '0'
+
+        document.querySelector('.player-0-panel').classList.toggle('active')
+        document.querySelector('.player-1-panel').classList.toggle('active')
+
+        //document.querySelector('.player-0-panel').classList.remove('active')
+        //document.querySelector('.player-1-panel').classList.add'active')
+
+        document.querySelector('.dice').style.display = 'none'
+    }
+})
+
+document.querySelector('.btn-hold').addEventListener('click' , function(){
+    // add current score to global score
+    // update the UI
+})
